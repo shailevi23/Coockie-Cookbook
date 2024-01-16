@@ -1,9 +1,9 @@
-﻿using CoockieCookbook.Ingredients.Dairy;
+﻿using CoockieCookbook.Ingredients;
+using CoockieCookbook.Ingredients.Dairy;
 using CoockieCookbook.Ingredients.Flour;
 using CoockieCookbook.Ingredients.Other;
 using CoockieCookbook.Ingredients.Spices;
 using System;
-using System.Collections.Generic;
 
 namespace CoockieCookbook
 {
@@ -11,6 +11,7 @@ namespace CoockieCookbook
     {
         public static readonly int MinId = 1;
         public static readonly int MaxId = 8;
+        public const string fileName = "recpies";
 
         public static int StringToInt(string numricString)
         {
@@ -45,6 +46,16 @@ namespace CoockieCookbook
         public static string GetIngredientPreparingInstructions(int IngredintIdInput)
         {
             return CreateSpecificIngredient((CoockieIngredient)(IngredintIdInput-1)).ToString();
+        }
+
+        public static string FilePath(string fileType)
+        {
+            return $"./{fileName}.{fileType}";
+        }
+
+        public static CoockieIngredient GetEnumIngredientFromUserInput(string ingredientIdInput)
+        {
+            return (CoockieIngredient)(Globals.StringToInt(ingredientIdInput) - 1);
         }
     }
 }

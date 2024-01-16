@@ -1,10 +1,7 @@
 ﻿namespace CoockieCookbook.Ingredients.Flour
 {
-    class Flour : Ingredient
+    abstract class Flour : Ingredient
     {
-        public Flour()
-        {
-            this.InstructionsOnPreparing = "Sieve. " + this.InstructionsOnPreparing;
-        }
+        public override string InstructionsOnPreparing => $"Sieve. {base.InstructionsOnPreparing}";
     }
 }

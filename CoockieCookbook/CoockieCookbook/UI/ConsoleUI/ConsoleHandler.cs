@@ -1,26 +1,23 @@
-﻿using CoockieCookbook.Files;
+﻿using CoockieCookbook.Ingredients;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CoockieCookbook
+namespace CoockieCookbook.UI.ConsoleUI
 {
-    static class ConsoleHandler
+    class ConsoleHandler : IUserInterface
     {
-        public static void Welcome()
+        public void ShowMessage(string message)
         {
-            Console.WriteLine("Create a new cookie recipe! Available ingredients are:");
+            Console.WriteLine(message);
         }
 
-        public static void CloseApp()
+        public void CloseApp()
         {
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
         }
 
-        public static void PrintNewRecpieIfExists(Recpie newRecpie)
+        public void ShowNewRecpie(Recpie newRecpie)
         {
             if (newRecpie is null)
             {
@@ -33,13 +30,25 @@ namespace CoockieCookbook
             }
         }
 
-        public static string MenuIO()
+        public void ShowMenu()
         {
-            PrintMenu();
+            Console.WriteLine(@"1.Wheat flour
+2.Coconut flour
+3.Butter
+4.Chocolate
+5.Sugar
+6.Cardamom
+7.Cinnamon
+8.Cocoa powder");
+            Console.WriteLine("Add an ingredient by its ID or type anything else if finished.");
+        }
+
+        public string UserInput()
+        {
             return Console.ReadLine();
         }
 
-        public static void PrintRecpiesFromFile(List<string> recpiesList)
+        public void ShowAllRecpies(List<string> recpiesList)
         {
             Console.WriteLine("Existing recipes are:");
 
@@ -52,19 +61,6 @@ namespace CoockieCookbook
                     Console.WriteLine(Globals.GetIngredientPreparingInstructions(recpieId));
                 }
             }
-        }
-
-        static void PrintMenu()
-        {
-            Console.WriteLine(@"1.Wheat flour
-2.Coconut flour
-3.Butter
-4.Chocolate
-5.Sugar
-6.Cardamom
-7.Cinnamon
-8.Cocoa powder");
-            Console.WriteLine("Add an ingredient by its ID or type anything else if finished.");
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace CoockieCookbook
+﻿namespace CoockieCookbook.Ingredients
 {
     public abstract class Ingredient
     {
-        public int Id { get; protected set; }
-        public string Name { get; protected set; }
-        protected string InstructionsOnPreparing { get; set; } = "Add to other ingredients.";
+        public abstract int Id { get; }
+        public abstract string Name { get; }
+        public virtual string InstructionsOnPreparing => "Add to other ingredients.";
 
         public override string ToString()
         {

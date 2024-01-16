@@ -1,30 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoockieCookbook
+namespace CoockieCookbook.Ingredients
 {
     class Recpie
     {
-        readonly List<Ingredient> recpie;
+        public List<Ingredient> IngredientsList { get; }
 
         public Recpie(List<Ingredient> ingredientsRecpie)
         {
-            recpie = ingredientsRecpie;
-        }
-
-        public List<string> GetRecpieListByIngredientId()
-        {
-            List<string> res = new List<string>();
-            foreach (Ingredient ingredient in recpie)
-            {
-                res.Add(ingredient.Id.ToString());
-            }
-            return res;
+            IngredientsList = ingredientsRecpie;
         }
 
         public override string ToString()
         {
-            return string.Join(Environment.NewLine, recpie);
+            return string.Join(Environment.NewLine, IngredientsList);
         }
     }
 }

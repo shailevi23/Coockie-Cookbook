@@ -1,23 +1,48 @@
-﻿using System;
+﻿using CoockieCookbook.Ingredients;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace CoockieCookbook.Files
 {
-    class TextFileHandler
+    class TextFileHandler : IRecpieRepository
     {
-        public static void Write(string obj, string filePath)
+        private readonly IStringsModifier _stringsModifier;
+
+        public TextFileHandler(IStringsModifier stringsModifier)
         {
-            WriteToFile(obj, filePath);
+            _stringsModifier = stringsModifier;
         }
 
-        public static List<string> Read(string filePath)
+
+        public void Write(Recpie recpie, string filePath)
+        {
+            var res = _stringsModifier.ModifyRecpieFromIngredientsListToString(recpie);
+            WriteToFile(res, filePath);
+        }
+
+        public List<string> Read(string filePath)
         {
             return ReadFileAsListOfStrings(filePath);
         }
 
+        public bool IsRepoExists(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return true;
+            }
 
-        static void WriteToFile(string text, string filePath)
+            return false;
+        }
+
+        public string GetRepoPath()
+        {
+            return Globals.FilePath("txt");
+        }
+
+
+        void WriteToFile(string text, string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -35,7 +60,7 @@ namespace CoockieCookbook.Files
             }
         }
 
-        static List<string> ReadFileAsListOfStrings(string filePath)
+        List<string> ReadFileAsListOfStrings(string filePath)
         {
             List<string> lines = new List<string>();
 

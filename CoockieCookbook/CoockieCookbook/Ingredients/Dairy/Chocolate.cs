@@ -2,11 +2,8 @@
 {
     class Chocolate : Ingredient
     {
-        public Chocolate()
-        {
-            this.Id = 4;
-            this.Name = "Chocolate";
-            this.InstructionsOnPreparing = "Melt in a water bath. " + this.InstructionsOnPreparing;
-        }
+        public override int Id => 4;
+        public override string Name => "Chocolate";
+        public override string InstructionsOnPreparing => $"Melt in a water bath. {base.InstructionsOnPreparing}";
     }
 }

@@ -2,10 +2,7 @@
 {
     class WheatFlour : Flour
     {
-        public WheatFlour()
-        {
-            this.Id = 1;
-            this.Name = "Wheat flour";
-        }
+        public override int Id => 1;
+        public override string Name => "Wheat flour";
     }
 }

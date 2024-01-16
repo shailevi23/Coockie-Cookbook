@@ -1,9 +1,5 @@
-using CoockieCookbook.Ingredients.Dairy;
-using CoockieCookbook.Ingredients.Flour;
-using CoockieCookbook.Ingredients.Other;
-using CoockieCookbook.Ingredients.Spices;
-using System;
-using System.Collections.Generic;
+using CoockieCookbook.Files;
+using CoockieCookbook.UI.ConsoleUI;
 
 namespace CoockieCookbook
 {
@@ -11,8 +7,8 @@ namespace CoockieCookbook
     {
         static void Main(string[] args)
         {
-            var cookBook = new Cookbook();
-            cookBook.RunConsoleApp();
+            var cookBook = new Cookbook(new ConsoleHandler(), new TextFileHandler(new StringsTextualManipulation()));
+            cookBook.RunApp();
         }
     }
 }

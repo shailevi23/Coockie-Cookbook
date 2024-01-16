@@ -1,4 +1,4 @@
-﻿namespace CoockieCookbook
+﻿namespace CoockieCookbook.UI.ConsoleUI
 {
     static class ValidateUserInput
     {

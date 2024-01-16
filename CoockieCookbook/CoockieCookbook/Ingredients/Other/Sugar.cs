@@ -2,10 +2,7 @@
 {
     class Sugar : Ingredient
     {
-        public Sugar()
-        {
-            this.Id = 5;
-            this.Name = "Sugar";
-        }
+        public override int Id => 5;
+        public override string Name => "Sugar";
     }
 }

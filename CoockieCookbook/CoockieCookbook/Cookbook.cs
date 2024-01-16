@@ -1,34 +1,43 @@
 ﻿using CoockieCookbook.Files;
+using CoockieCookbook.Ingredients;
+using CoockieCookbook.UI;
+using CoockieCookbook.UI.ConsoleUI;
 using System.Collections.Generic;
 
 namespace CoockieCookbook
 {
     class Cookbook
     {
-        public void RunConsoleApp()
+        private readonly IRecpieRepository _recpieRepository;
+        private readonly IUserInterface _userInterface;
+
+        public Cookbook(IUserInterface iUserInterface, IRecpieRepository iRecpieRepository)
         {
-            List<string> recpiesList = GetRecpiesListIfExists();
-
-            ConsoleHandler.Welcome();
-
-            var ingredientsList = RunMenuAndGetIngredientsListFromUser();
-            var newRecpie = CreateNewRecpieIfIngredientsListNotEmpty(ingredientsList, recpiesList);
-
-            ConsoleHandler.PrintNewRecpieIfExists(newRecpie);
-            ConsoleHandler.CloseApp();
+            _userInterface = iUserInterface;
+            _recpieRepository = iRecpieRepository;
         }
 
-        private List<string> GetRecpiesListIfExists()
+        public void RunApp()
         {
-            List<string> recpiesList = null;
+            ShowRecpiesListIfExists();
 
-            if (FileHandler.IsFileExists())
+            _userInterface.ShowMessage("Create a new cookie recipe!Available ingredients are: ");
+
+            var ingredientsList = RunMenuAndGetIngredientsListFromUser();
+            var newRecpie = CreateNewRecpieIfIngredientsListNotEmpty(ingredientsList);
+
+            _userInterface.ShowNewRecpie(newRecpie);
+            _userInterface.CloseApp();
+        }
+
+        private void ShowRecpiesListIfExists()
+        {
+            string filePath = _recpieRepository.GetRepoPath();
+            if (_recpieRepository.IsRepoExists(filePath))
             {
-                recpiesList = FileHandler.ReadFromFile();
-                ConsoleHandler.PrintRecpiesFromFile(recpiesList);
+                List<string> recpiesList = _recpieRepository.Read(filePath);
+                _userInterface.ShowAllRecpies(recpiesList);
             }
-
-            return recpiesList;
         }
 
         private List<Ingredient> RunMenuAndGetIngredientsListFromUser()
@@ -42,7 +51,8 @@ namespace CoockieCookbook
                 //User IO in menu screen
                 do
                 {
-                    ingredientIdInput = ConsoleHandler.MenuIO();
+                    _userInterface.ShowMenu();
+                    ingredientIdInput = _userInterface.UserInput();
                     isInputValid = ValidateUserInput.IsValidate(ingredientIdInput);
                 } while (isInputValid && !ValidateUserInput.IsNumricUserInputIdInRange(ingredientIdInput));
 
@@ -50,7 +60,7 @@ namespace CoockieCookbook
                 //exit the while loop and add the recpie if exists.
                 if (isInputValid)
                 {
-                    var enumIngredient = Enums.GetEnumIngredientFromUserInput(ingredientIdInput);
+                    var enumIngredient = Globals.GetEnumIngredientFromUserInput(ingredientIdInput);
                     ingredientsList.Add(Globals.CreateSpecificIngredient(enumIngredient));
                 }
             } while (isInputValid);
@@ -58,14 +68,13 @@ namespace CoockieCookbook
             return ingredientsList;
         }
 
-        private Recpie CreateNewRecpieIfIngredientsListNotEmpty(List<Ingredient> ingredientsList, List<string> recpiesList)
+        private Recpie CreateNewRecpieIfIngredientsListNotEmpty(List<Ingredient> ingredientsList)
         {
             Recpie newRecpie = null;
 
             if (ingredientsList.Count != 0)
             {
-                newRecpie = new Recpie(ingredientsList);
-                FileHandler.WriteToFile(newRecpie, recpiesList);
+                _recpieRepository.Write(new Recpie(ingredientsList), _recpieRepository.GetRepoPath());
             }
 
             return newRecpie;

@@ -1,10 +1,7 @@
 ﻿namespace CoockieCookbook.Ingredients.Spices
 {
-    class Spice : Ingredient
+    abstract class Spice : Ingredient
     {
-        public Spice()
-        {
-            this.InstructionsOnPreparing = "Take half a teaspoon. " + this.InstructionsOnPreparing;
-        }
+        public override string InstructionsOnPreparing => $"Take half a teaspoon. {base.InstructionsOnPreparing}";
     }
 }
