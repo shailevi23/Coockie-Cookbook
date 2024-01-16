@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Ingredients\Flour\CoconutFlour.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ingredients\Other\Sugar.cs" />
     <Compile Include="Recpie.cs" />
+    <Compile Include="Cookbook.cs" />
     <Compile Include="UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

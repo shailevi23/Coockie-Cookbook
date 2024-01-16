@@ -2,23 +2,23 @@
 
 namespace CoockieCookbook
 {
+    public enum CoockieIngredient
+    {
+        WheatFlour,
+        CoconutFlour,
+        Butter,
+        Chocolate,
+        Sugar,
+        Cardamom,
+        Cinnamon,
+        CocoaPowder,
+    }
+
     class Enums
     {
-        public enum Ingredient
+        public static CoockieIngredient GetEnumIngredientFromUserInput(string ingredientIdInput)
         {
-            WheatFlour,
-            CoconutFlour,
-            Butter,
-            Chocolate,
-            Sugar,
-            Cardamom,
-            Cinnamon,
-            CocoaPowder,
-        }
-
-        public static Enums.Ingredient GetEnumIngredientFromUserInput(string ingredientIdInput)
-        {
-            return (Enums.Ingredient)(Globals.StringToInt(ingredientIdInput) - 1);
+            return (CoockieIngredient)(Globals.StringToInt(ingredientIdInput) - 1);
         }
     }
 }
