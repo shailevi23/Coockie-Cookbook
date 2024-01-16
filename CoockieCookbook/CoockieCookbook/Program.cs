@@ -12,7 +12,7 @@ namespace CoockieCookbook
         static void Main(string[] args)
         {
             var cookBook = new Cookbook();
-            cookBook.Run();
+            cookBook.RunConsoleApp();
         }
     }
 }

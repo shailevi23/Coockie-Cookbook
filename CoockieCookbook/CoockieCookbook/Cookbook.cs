@@ -1,26 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using CoockieCookbook.Files;
+using System.Collections.Generic;
 
 namespace CoockieCookbook
 {
     class Cookbook
     {
-        public void Run()
+        public void RunConsoleApp()
         {
+            List<string> recpiesList = GetRecpiesListIfExists();
+
             ConsoleHandler.Welcome();
-            Recpie newRecpie = null;
 
-            var ingredientsList = RunMenu();
+            var ingredientsList = RunMenuAndGetIngredientsListFromUser();
+            var newRecpie = CreateNewRecpieIfIngredientsListNotEmpty(ingredientsList, recpiesList);
 
-            if (ingredientsList.Count != 0)
-            {
-                newRecpie = new Recpie(ingredientsList);
-            }
-
-            ConsoleHandler.RecpiePrinter(newRecpie);
+            ConsoleHandler.PrintNewRecpieIfExists(newRecpie);
             ConsoleHandler.CloseApp();
         }
 
-        public List<Ingredient> RunMenu()
+        private List<string> GetRecpiesListIfExists()
+        {
+            List<string> recpiesList = null;
+
+            if (FileHandler.IsFileExists())
+            {
+                recpiesList = FileHandler.ReadFromFile();
+                ConsoleHandler.PrintRecpiesFromFile(recpiesList);
+            }
+
+            return recpiesList;
+        }
+
+        private List<Ingredient> RunMenuAndGetIngredientsListFromUser()
         {
             List<Ingredient> ingredientsList = new List<Ingredient>();
             string ingredientIdInput;
@@ -32,8 +43,8 @@ namespace CoockieCookbook
                 do
                 {
                     ingredientIdInput = ConsoleHandler.MenuIO();
-                    isInputValid = UserInput.IsValidate(ingredientIdInput);
-                } while (isInputValid && !UserInput.IsNumricUserInputIdInRange(ingredientIdInput));
+                    isInputValid = ValidateUserInput.IsValidate(ingredientIdInput);
+                } while (isInputValid && !ValidateUserInput.IsNumricUserInputIdInRange(ingredientIdInput));
 
                 //if user input is valid, add him to ingredients list, else,
                 //exit the while loop and add the recpie if exists.
@@ -45,6 +56,19 @@ namespace CoockieCookbook
             } while (isInputValid);
 
             return ingredientsList;
+        }
+
+        private Recpie CreateNewRecpieIfIngredientsListNotEmpty(List<Ingredient> ingredientsList, List<string> recpiesList)
+        {
+            Recpie newRecpie = null;
+
+            if (ingredientsList.Count != 0)
+            {
+                newRecpie = new Recpie(ingredientsList);
+                FileHandler.WriteToFile(newRecpie, recpiesList);
+            }
+
+            return newRecpie;
         }
     }
 

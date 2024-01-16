@@ -14,6 +14,12 @@ namespace CoockieCookbook
         CocoaPowder,
     }
 
+    public enum FileFormat
+    {
+        Text,
+        Json,
+    }
+
     class Enums
     {
         public static CoockieIngredient GetEnumIngredientFromUserInput(string ingredientIdInput)

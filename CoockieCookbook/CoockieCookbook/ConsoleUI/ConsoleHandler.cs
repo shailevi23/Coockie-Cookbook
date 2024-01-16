@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoockieCookbook.Files;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace CoockieCookbook
             Console.ReadLine();
         }
 
-        public static void RecpiePrinter(Recpie newRecpie)
+        public static void PrintNewRecpieIfExists(Recpie newRecpie)
         {
             if (newRecpie is null)
             {
@@ -36,6 +37,21 @@ namespace CoockieCookbook
         {
             PrintMenu();
             return Console.ReadLine();
+        }
+
+        public static void PrintRecpiesFromFile(List<string> recpiesList)
+        {
+            Console.WriteLine("Existing recipes are:");
+
+            for(int i = 1; i <= recpiesList.Count; i++)
+            {
+                Console.WriteLine($"*****{i}*****");
+                List<int> recpiesListOfIntegers = new List<int>(Array.ConvertAll(recpiesList[i-1].Split(','), s => int.Parse(s)));
+                foreach (int recpieId in recpiesListOfIntegers)
+                {
+                    Console.WriteLine(Globals.GetIngredientPreparingInstructions(recpieId));
+                }
+            }
         }
 
         static void PrintMenu()

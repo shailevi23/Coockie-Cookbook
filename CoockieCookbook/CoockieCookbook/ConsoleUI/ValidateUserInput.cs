@@ -1,6 +1,6 @@
 ﻿namespace CoockieCookbook
 {
-    static class UserInput
+    static class ValidateUserInput
     {
         public static bool IsValidate(string input)
         {

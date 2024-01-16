@@ -3,6 +3,7 @@ using CoockieCookbook.Ingredients.Flour;
 using CoockieCookbook.Ingredients.Other;
 using CoockieCookbook.Ingredients.Spices;
 using System;
+using System.Collections.Generic;
 
 namespace CoockieCookbook
 {
@@ -39,6 +40,11 @@ namespace CoockieCookbook
                 default:
                     throw new ArgumentException("CoockieIngredient Dosen't exists.");
             }
+        }
+
+        public static string GetIngredientPreparingInstructions(int IngredintIdInput)
+        {
+            return CreateSpecificIngredient((CoockieIngredient)(IngredintIdInput-1)).ToString();
         }
     }
 }
