@@ -74,7 +74,8 @@ namespace CoockieCookbook
 
             if (ingredientsList.Count != 0)
             {
-                _recpieRepository.Write(new Recpie(ingredientsList), _recpieRepository.GetRepoPath());
+                newRecpie = new Recpie(ingredientsList);
+                _recpieRepository.Write(newRecpie, _recpieRepository.GetRepoPath());
             }
 
             return newRecpie;
