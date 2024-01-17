@@ -11,5 +11,6 @@ namespace CoockieCookbook.UI
         void ShowAllRecpies(List<string> recpiesList);
         void ShowNewRecpie(Recpie newRecpie);
         string UserInput();
+        Ingredient CreateIngredientById(string ingredientId);
     }
 }

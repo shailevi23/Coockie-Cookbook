@@ -2,6 +2,7 @@
 using CoockieCookbook.Ingredients;
 using CoockieCookbook.UI;
 using CoockieCookbook.UI.ConsoleUI;
+using CoockieCookbook.Utils;
 using System.Collections.Generic;
 
 namespace CoockieCookbook
@@ -10,11 +11,16 @@ namespace CoockieCookbook
     {
         private readonly IRecpieRepository _recpieRepository;
         private readonly IUserInterface _userInterface;
+        private readonly IUserInputValidator _userInputValidator;
 
-        public Cookbook(IUserInterface iUserInterface, IRecpieRepository iRecpieRepository)
+
+        public Cookbook(IUserInterface userInterface,
+            IRecpieRepository recpieRepository,
+            IUserInputValidator userInputValidator)
         {
-            _userInterface = iUserInterface;
-            _recpieRepository = iRecpieRepository;
+            _userInterface = userInterface;
+            _recpieRepository = recpieRepository;
+            _userInputValidator = userInputValidator;
         }
 
         public void RunApp()
@@ -35,7 +41,7 @@ namespace CoockieCookbook
             string filePath = _recpieRepository.GetRepoPath();
             if (_recpieRepository.IsRepoExists(filePath))
             {
-                List<string> recpiesList = _recpieRepository.Read(filePath);
+                var recpiesList = _recpieRepository.Read(filePath);
                 _userInterface.ShowAllRecpies(recpiesList);
             }
         }
@@ -44,26 +50,24 @@ namespace CoockieCookbook
         {
             List<Ingredient> ingredientsList = new List<Ingredient>();
             string ingredientIdInput;
-            bool isInputValid;
+            bool shallContinue = true;
 
-            do
+            while (shallContinue)
             {
-                //User IO in menu screen
-                do
+                _userInterface.ShowMenu();
+                ingredientIdInput = _userInterface.UserInput();
+                if(_userInputValidator.IsDigit(ingredientIdInput))
                 {
-                    _userInterface.ShowMenu();
-                    ingredientIdInput = _userInterface.UserInput();
-                    isInputValid = ValidateUserInput.IsValidate(ingredientIdInput);
-                } while (isInputValid && !ValidateUserInput.IsNumricUserInputIdInRange(ingredientIdInput));
-
-                //if user input is valid, add him to ingredients list, else,
-                //exit the while loop and add the recpie if exists.
-                if (isInputValid)
-                {
-                    var enumIngredient = Globals.GetEnumIngredientFromUserInput(ingredientIdInput);
-                    ingredientsList.Add(Globals.CreateSpecificIngredient(enumIngredient));
+                    if (_userInputValidator.IsInRange(ingredientIdInput, Globals.MinId, Globals.MaxId))
+                    {
+                        ingredientsList.Add(_userInterface.CreateIngredientById(ingredientIdInput));
+                    }
                 }
-            } while (isInputValid);
+                else
+                {
+                    shallContinue = false;
+                }
+            }
 
             return ingredientsList;
         }

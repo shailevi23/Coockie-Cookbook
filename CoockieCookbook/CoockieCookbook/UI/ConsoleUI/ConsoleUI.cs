@@ -1,11 +1,19 @@
 ﻿using CoockieCookbook.Ingredients;
+using CoockieCookbook.Utils;
 using System;
 using System.Collections.Generic;
 
 namespace CoockieCookbook.UI.ConsoleUI
 {
-    class ConsoleHandler : IUserInterface
+    class ConsoleUI : IUserInterface
     {
+        private readonly IngredientRegister ingredientRegister;
+
+        public ConsoleUI()
+        {
+            ingredientRegister = new IngredientRegister();
+        }
+
         public void ShowMessage(string message)
         {
             Console.WriteLine(message);
@@ -58,9 +66,30 @@ namespace CoockieCookbook.UI.ConsoleUI
                 List<int> recpiesListOfIntegers = new List<int>(Array.ConvertAll(recpiesList[i-1].Split(','), s => int.Parse(s)));
                 foreach (int recpieId in recpiesListOfIntegers)
                 {
-                    Console.WriteLine(Globals.GetIngredientPreparingInstructions(recpieId));
+                    Console.WriteLine(ingredientRegister.GetIngredientPreparingInstructions(recpieId));
                 }
             }
+        }
+
+        public Ingredient CreateIngredientById(string ingredientId)
+        {
+            return ingredientRegister.CreateIngredientById(ingredientId);
+        }
+
+        public bool IsDigit(string input)
+        {
+            return int.TryParse(input, out int res);
+        }
+
+        public bool IsInRange(string input, int minVal, int maxVal)
+        {
+            int idInput = int.Parse(input);
+            if (idInput >= minVal && idInput <= maxVal)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

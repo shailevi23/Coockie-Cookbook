@@ -1,5 +1,6 @@
 using CoockieCookbook.Files;
 using CoockieCookbook.UI.ConsoleUI;
+using CoockieCookbook.Utils;
 
 namespace CoockieCookbook
 {
@@ -7,7 +8,9 @@ namespace CoockieCookbook
     {
         static void Main(string[] args)
         {
-            var cookBook = new Cookbook(new ConsoleHandler(), new TextFileHandler(new StringsTextualManipulation()));
+            var cookBook = new Cookbook(new ConsoleUI(),
+                new TextFileHandler(new StringsTextualManipulation()),
+                new UserInputValidator());
             cookBook.RunApp();
         }
     }

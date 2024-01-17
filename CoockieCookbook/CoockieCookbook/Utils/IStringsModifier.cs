@@ -1,6 +1,6 @@
 ﻿using CoockieCookbook.Ingredients;
 
-namespace CoockieCookbook.Files
+namespace CoockieCookbook.Utils
 {
     interface IStringsModifier
     {

@@ -70,13 +70,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Files\IRecpieRepository.cs" />
-    <Compile Include="Files\IStringsModifier.cs" />
-    <Compile Include="Files\StringsTextualManipulation.cs" />
+    <Compile Include="Utils\IngredientRegister.cs" />
+    <Compile Include="Utils\IStringsModifier.cs" />
+    <Compile Include="Utils\StringsTextualManipulation.cs" />
     <Compile Include="Globals\CoockieIngredient.cs" />
     <Compile Include="Globals\FileFormat.cs" />
     <Compile Include="Ingredients\Flour\Flour.cs" />
     <Compile Include="Ingredients\Spices\Spice.cs" />
-    <Compile Include="UI\ConsoleUI\ConsoleHandler.cs" />
+    <Compile Include="UI\ConsoleUI\ConsoleUI.cs" />
     <Compile Include="Files\JsonFileHandler.cs" />
     <Compile Include="Files\TextFileHandler.cs" />
     <Compile Include="Globals\Globals.cs" />
@@ -93,7 +94,8 @@
     <Compile Include="Ingredients\Other\Sugar.cs" />
     <Compile Include="Ingredients\Recpie.cs" />
     <Compile Include="Cookbook.cs" />
-    <Compile Include="UI\ValidateUserInput.cs" />
+    <Compile Include="Utils\UserInputValidator.cs" />
+    <Compile Include="Utils\IUserInputValidator.cs" />
     <Compile Include="UI\IUserInterface.cs" />
   </ItemGroup>
   <ItemGroup>

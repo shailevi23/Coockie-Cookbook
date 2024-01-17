@@ -1,7 +1,7 @@
 ﻿using CoockieCookbook.Ingredients;
 using System.Collections.Generic;
 
-namespace CoockieCookbook.Files
+namespace CoockieCookbook.Utils
 {
     class StringsTextualManipulation : IStringsModifier
     {
